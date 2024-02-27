@@ -1,5 +1,1 @@
-# Ignore all files
-/*
 
-# Except for files in the notebooks/ directory
-!notebooks/*
