@@ -285,19 +285,10 @@ param_grids = [
 @pytest.fixture(scope="function")
 def test_pipeline_execution():
     # Construire le chemin absolu vers train_sample.csv en utilisant un chemin relatif
-   
-
-    # Obtenez le chemin absolu du répertoire de travail actuel
-    current_dir = os.path.dirname(__file__)
-    
-    # Construisez le chemin absolu vers le fichier 'train_sample.csv'
-    data_file_path = os.path.join(current_dir, 'data', 'train_sample.csv')
-    
-    # Utilisez `data_file_path` dans votre code pour accéder au fichier
-
+    csv_file_path = "data/train_sample.csv"
     
     pipeline = ModelPipeline(models, param_grids, scoring='roc_auc', cost_fn=10, cost_fp=1, test_size=0.2, taille=5000, random_state=42)
-    results_df = pipeline.run_pipeline(pd.read_csv( data_file_path), 'TARGET', 'SK_ID_CURR')
+    results_df = pipeline.run_pipeline(pd.read_csv(csv_file_path), 'TARGET', 'SK_ID_CURR')
     return results_df
     
 
