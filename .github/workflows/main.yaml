@@ -1,0 +1,25 @@
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: '0' # Assurez-vous de récupérer tous les fichiers et branches
+
+    # Ajoutez une étape pour afficher le répertoire de travail actuel
+    - name: Print working directory
+      run: pwd
+
+    # Ajoutez une étape pour lister les fichiers dans le répertoire de travail
+    - name: List files in working directory
+      run: ls -la
+
+    # Ajoutez une étape pour lister les fichiers dans le répertoire des données
+    - name: List files in data directory
+      run: ls -la ./data
+
+    # Votre étape de test actuelle
+    - name: Run tests
+      run: |
+        python -m pytest tests/
