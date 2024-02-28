@@ -1,25 +1,36 @@
+name: Main CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: '0' # Assurez-vous de récupérer tous les fichiers et branches
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0" # Assurez-vous de récupérer tous les fichiers et branches
 
-    # Ajoutez une étape pour afficher le répertoire de travail actuel
-    - name: Print working directory
-      run: pwd
+      - name: Print working directory
+        run: pwd
 
-    # Ajoutez une étape pour lister les fichiers dans le répertoire de travail
-    - name: List files in working directory
-      run: ls -la
+      - name: List files in working directory
+        run: ls -la
 
-    # Ajoutez une étape pour lister les fichiers dans le répertoire des données
-    - name: List files in data directory
-      run: ls -la ./data
+      # Assurez-vous que le répertoire 'data' existe
+      - name: Check if data directory exists
+        run: |
+          if [ -d "data" ]; then
+            echo "Directory 'data' exists."
+            ls -la data
+          else
+            echo "Directory 'data' does not exist."
+            exit 1
+          fi
 
-    # Votre étape de test actuelle
-    - name: Run tests
-      run: |
-        python -m pytest tests/
+      - name: Run tests
+        run: python -m pytest tests/
