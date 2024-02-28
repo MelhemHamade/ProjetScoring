@@ -280,7 +280,7 @@ param_grids = [
 
 
 # Obtenez le chemin absolu du répertoire actuel du fichier de test
-current_directory = os.getcwd()
+#current_directory = os.getcwd()
 
 @pytest.fixture(scope="function")
 def test_pipeline_execution():
