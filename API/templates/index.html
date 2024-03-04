@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHAP Plot Generator</title>
+    <style>
+        /* Styles CSS ici */
+    </style>
+</head>
+<body>
+    <h1>SHAP Plot Generator</h1>
+    <form id="generateShapForm" action="/generate_shap_plot" method="GET">
+        <label for="sk_id_curr">SK_ID_CURR:</label>
+        <input type="text" id="sk_id_curr" name="SK_ID_CURR">
+        <input type="submit" value="Generate SHAP Plot">
+    </form>
+
+    <div id="plotContainer">
+        <!-- L'image SHAP sera affichée ici -->
+    </div>
+
+    <script>
+        document.getElementById('generateShapForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(this);
+            const skIdCurr = formData.get('SK_ID_CURR');
+
+            try {
+                const response = await fetch(`/generate_shap_plot?SK_ID_CURR=${skIdCurr}`);
+
+                if (!response.ok) {
+                    const errorMessage = await response.text();
+                    throw new Error(errorMessage);
+                }
+
+                const data = await response.json();
+                const shapPlotPath = `/static/images/${data.shap_plot_path}`;
+
+                // Afficher l'image SHAP dans le conteneur
+                document.getElementById('plotContainer').innerHTML = `<img src="${shapPlotPath}" alt="SHAP Plot">`;
+            } catch (error) {
+                // Afficher le message d'erreur dans l'interface utilisateur
+                document.getElementById('plotContainer').innerHTML = `<p>${error.message}</p>`;
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
